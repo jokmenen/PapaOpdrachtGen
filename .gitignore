@@ -1,0 +1,13 @@
+venv_papaopdrachtgen
+#images
+*.png
+*.jpg
+*.webp
+
+#results
+*.zip
+*_processed
+
+
+#trash
+test_ocr.ipynb
