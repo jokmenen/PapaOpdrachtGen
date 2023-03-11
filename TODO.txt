@@ -1,0 +1,3 @@
+HTML frontend ben ik mee bezig, nu backend aan het aanpassen zodat ie een tekst geeft ipv plaatje. Uitvinden hoe ik de woorden verwijder uit de volledige tekst zonder de formatting te verpesten. --> testen in notebook nog, later in app.py verder verwerken
+Verder nog frontend beter scripten zodat ie daadwerkelijk drag en dropt
+

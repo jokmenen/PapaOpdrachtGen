@@ -1,0 +1,68 @@
+
+<html>
+<head>
+    <link rel="stylesheet" href="{{url_for('static', filename='app.css')}}">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <script>
+    function allowDrop(ev) {
+    ev.preventDefault();
+    }
+
+    function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.textContent);
+    }
+
+    function drop(ev) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("text");
+    ev.target.innerHTML = data;
+    ev.target.setAttribute('draggable', 'True')
+    var origin = doucment.getElementById(data)
+    origin.innerHTML = '&nbsp;'
+    }
+
+    </script>
+
+
+
+
+
+
+
+
+    <!-- <script src="{{url_for('static', filename='app.js')}}"></script> -->
+</head>    
+<div class="quiz-wrapper">
+	<p class="question-description">Fill in the blanks by dragging the missing answer.</p>
+	<ul class="options">
+		<li class="title">Options</li>
+        {% for ans in answers %}
+
+		<li id="{{ans}}" class="option" draggable="True" ondragstart="drag(event)">{{ans}}</li>
+        {% endfor %}
+	</ul>
+<div class="answers">
+    <p>
+        {{text}}
+    </p>
+
+
+
+	<!-- <ol>
+		<li><span class="target" ondrop="drop(event)" ondragover="allowDrop(event)" draggable="False">&nbsp;</span>, a native of St Paul, Minnesota, and also a member of the "Lost Generation" finished four novels including "This Side of Paradise".</li>
+		<li><span class="target" data-accept="carraway">&nbsp;</span> attended Yale with the large and brooding<span class="target" data-accept="buchanan">&nbsp;</span>.</li>
+		<li>George Wilson owns an unsuccessful garage in an area known as the <span class="target" data-accept="ashes">&nbsp;</span>, where Tom brings Nick for a party.</li>
+		<li>Jay Gatsby, the Buchanans, and Nick himself all make<span class="target" data-accept="westegg">&nbsp;</span>their home.</li>
+	</ol> -->
+</div>
+ <button type="submit" value="submit">Submit</button>
+ <div class="lightbox-bg"></div>
+ <div class="status confirm">
+   <p>All Answers Answered</p>
+ </div>
+ <div class="status deny">
+   <p>Answers Remain</p>
+ </div>
+</div>
+</html>
