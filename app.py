@@ -75,7 +75,7 @@ def get_blacklist():
 
 
 
-def process_image(image, data, select_n = 9):
+def process_image(image, data, select_n = 9, start_on_1 = True):
     blacklist = get_blacklist() # get a list of words that are deemed not-interesting for filtering purposes
     image_copy = image.copy() #work on a fresh copy of the original image
     draw = ImageDraw.Draw(image_copy) #enable drawing the squares on the image
@@ -92,6 +92,8 @@ def process_image(image, data, select_n = 9):
 
     # Process the words that are to be cut from the image.
     for i,occ in enumerate(word_occurences):
+        if start_on_1:
+            i = i+1
         # extract the width, height, top and left position for that detected word
         w = data["width"][occ]
         h = data["height"][occ]
