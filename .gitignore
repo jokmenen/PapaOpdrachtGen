@@ -11,3 +11,4 @@ venv_papaopdrachtgen
 
 #trash
 test_ocr.ipynb
+__pycache__

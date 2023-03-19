@@ -8,7 +8,7 @@ import random
 from pathlib import Path
 
 ## Known bugs: woorden met een streeepje ertussen pakt ie alleen het woord voor het streepje. Gaat meestal wel goed though
-
+import argparse
 
 FILE = "papa_test.jpg"
 
@@ -119,6 +119,15 @@ def process_image(image, data, select_n = 9):
 
 
 if __name__ == "__main__":
-    print(Path(FILE).is_file())
-    process_file(Path(FILE))
+    parser = argparse.ArgumentParser(description='File')
+    parser.add_argument('-f',"--file", dest='file', type=str, help='Filename of the file that will be parsed')
+
+    args = parser.parse_args()
+
+    if args.file:
+        print(f"Processing: {args.file}")
+        process_file(Path(args.file))
+    else:
+        print(f"No file input. Defaulting to {FILE}")
+        process_file(Path(FILE))
 
