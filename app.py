@@ -6,6 +6,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 import re
 import random
 from pathlib import Path
+import random
 
 ## Known bugs: woorden met een streeepje ertussen pakt ie alleen het woord voor het streepje. Gaat meestal wel goed though
 import argparse
@@ -75,14 +76,30 @@ def get_blacklist():
 
 
 
-def process_image(image, data, select_n = 9, start_on_1 = True):
+def process_image(image, data, select_n = 9, start_on_1 = True, remove_duplicates_prob = 1.0): #remove_duplicates_prob 0 -> dont remove, 1 -> only keep 1 . in between: probability of removing the word
+
+
+
     blacklist = get_blacklist() # get a list of words that are deemed not-interesting for filtering purposes
     image_copy = image.copy() #work on a fresh copy of the original image
     draw = ImageDraw.Draw(image_copy) #enable drawing the squares on the image
 
     # Loop over the words found in the ocr'd image, filter out words that arent interesting. 
     # TODO, the level part is a bit weird, may not work later on
-    word_occurences = [ i for i, word in enumerate(data["text"]) if (filter_words(word,blacklist)) and (data['level'][i] >4)]
+    # word_occurences = [ i for i, word in enumerate(data["text"]) if (filter_words(word,blacklist)) and (data['level'][i] >4)]
+    word_occurences = []
+    word_in_occurences = set()
+    for i, word in enumerate(data['text']):
+        ### Check if word appears in the words that are already detected. Then, based on the remove_duplicates_prob value, determined if it should be scrapped or not
+        if ((word) in word_in_occurences)\
+            and (random.random() > remove_duplicates_prob):
+            #if true, do not cut out the duplicate word
+            continue # do not add to word_occurences 
+
+        elif (filter_words(word,blacklist)) and (data['level'][i] >4):
+            word_occurences += [i]
+            word_in_occurences.add(word)
+
     detected_words = []
     cut_word_images = {}
 
